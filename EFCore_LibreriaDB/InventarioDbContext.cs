@@ -18,6 +18,8 @@ namespace EFCore_LibreriaDB
         public DbSet<Genero> Generos { get; set; }
 
         public DbSet<ListadoArticuloDatos> ListadoArticulos { get; set; }
+        public DbSet<ListadoArticulosNombresDelimBarraDatos> ListadoArticulosCadena { get; set; }
+        public DbSet<ArticuloValorTotalDatos> ArticuloValorTotales { get; set; }
 
 
         public InventarioDbContext()
@@ -67,6 +69,18 @@ namespace EFCore_LibreriaDB
             {
                 x.HasNoKey();
                 x.ToView("ListadoArticulos");   // <<--- public DbSet<ListadoArticuloDatos> ListadoArticulos { get; set; }
+            });
+
+            modelBuilder.Entity<ListadoArticulosNombresDelimBarraDatos>(x =>
+            {
+                x.HasNoKey();
+                x.ToView("ListadoArticulosCadena");
+            });
+
+            modelBuilder.Entity<ArticuloValorTotalDatos>(x => 
+            {
+                x.HasNoKey();
+                x.ToView("ArticuloValorTotales");
             });
         }
 

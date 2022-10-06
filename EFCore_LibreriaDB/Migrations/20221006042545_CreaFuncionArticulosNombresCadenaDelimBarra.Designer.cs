@@ -4,6 +4,7 @@ using EFCore_LibreriaDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore_LibreriaDB.Migrations
 {
     [DbContext(typeof(InventarioDbContext))]
-    partial class InventarioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221006042545_CreaFuncionArticulosNombresCadenaDelimBarra")]
+    partial class CreaFuncionArticulosNombresCadenaDelimBarra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,14 +248,6 @@ namespace EFCore_LibreriaDB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToView("ListadoArticulos");
-                });
-
-            modelBuilder.Entity("InventarioModelos.ModelosDato.ListadoArticulosNombresDelimBarraDatos", b =>
-                {
-                    b.Property<string>("ArticulosCadena")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView("ListadoArticulosCadena");
                 });
 
             modelBuilder.Entity("InventarioModelos.Participante", b =>

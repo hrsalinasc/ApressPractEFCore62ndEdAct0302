@@ -2,6 +2,7 @@
 using EFCore_LibreriaDB.Migrations;
 using InventarioModelos;
 using InventarioUtils;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -23,6 +24,8 @@ namespace EFCore_Actividad0302
             ActualizarArticulos();
             ListarInventario();
             ListadoArticulos();
+            ListarArticulosCadenaDelimBarra();
+            ArticulosValoresTotales();
         }
 
         static void Inicializacion()
@@ -113,6 +116,29 @@ namespace EFCore_Actividad0302
                         salida = $"{salida}, Categoria: {dato.CategoriaNombre}";
                     }
                     Console.WriteLine(salida);
+                }
+            }
+        }
+
+        private static void ListarArticulosCadenaDelimBarra()
+        {
+            using (var db = new InventarioDbContext(_opcionesBuilder.Options))
+            {
+                var EstaActivoParam = new SqlParameter("EstaActivo", 1);
+                var resultado = db.ListadoArticulosCadena.FromSqlRaw("SELECT dbo.ArticulosNombresCadenaDelimBarra(@EstaActivo) ArticulosCadena", EstaActivoParam).FirstOrDefault();
+                Console.WriteLine($"Articulos Activos: {resultado.ArticulosCadena}");
+            }
+        }
+
+        private static void ArticulosValoresTotales()
+        {
+            using (var db = new InventarioDbContext(_opcionesBuilder.Options))
+            {
+                var EstaActivoParam = new SqlParameter("EstaActivo", 1);
+                var listado = db.ArticuloValorTotales.FromSqlRaw("SELECT * FROM dbo.ArticulosValorTotal(@EstaActivo)", EstaActivoParam).ToList();
+                foreach (var dato in listado)
+                {
+                    Console.WriteLine($"Articulo] {dato.Id, -10} |{dato.Nombre, -50} |{dato.Cantidad, -4} |{dato.ValorTotal, -5}");
                 }
             }
         }

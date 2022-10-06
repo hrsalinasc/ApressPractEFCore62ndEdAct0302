@@ -1,4 +1,5 @@
 ﻿using EFCore_LibreriaDB;
+using EFCore_LibreriaDB.Migrations;
 using InventarioModelos;
 using InventarioUtils;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +18,11 @@ namespace EFCore_Actividad0302
         static void Main(string[] args)
         {
             Inicializacion();
-            EliminarArticulos();
+            //EliminarArticulos();
             AsegurarArticulos();
             ActualizarArticulos();
             ListarInventario();
+            ListadoArticulos();
         }
 
         static void Inicializacion()
@@ -95,6 +97,23 @@ namespace EFCore_Actividad0302
                 }
                 db.Articulos.UpdateRange(articulos);
                 db.SaveChanges();
+            }
+        }
+
+        private static void ListadoArticulos()
+        {
+            using (var db = new InventarioDbContext(_opcionesBuilder.Options))
+            {
+                var listado = db.ListadoArticulos.FromSqlRaw("EXECUTE dbo.ListadoArticulos").ToList();
+                foreach(var dato in listado)
+                {
+                    var salida = $"ARTICULO {dato.Nombre} {dato.Descripcion}";
+                    if (!string.IsNullOrWhiteSpace(dato.CategoriaNombre))
+                    {
+                        salida = $"{salida}, Categoria: {dato.CategoriaNombre}";
+                    }
+                    Console.WriteLine(salida);
+                }
             }
         }
     }

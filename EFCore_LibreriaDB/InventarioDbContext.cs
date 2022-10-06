@@ -1,4 +1,5 @@
 ﻿using InventarioModelos;
+using InventarioModelos.ModelosDato;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -15,6 +16,9 @@ namespace EFCore_LibreriaDB
         public DbSet<CategoriaDetalle> CategoriaDetalles { get; set; }
         public DbSet<Participante> Participantes { get; set; }
         public DbSet<Genero> Generos { get; set; }
+
+        public DbSet<ListadoArticuloDatos> ListadoArticulos { get; set; }
+
 
         public InventarioDbContext()
         {
@@ -59,6 +63,11 @@ namespace EFCore_LibreriaDB
                                             .HasConstraintName("FK_ParticipanteArticulo_Articulos_ArticuloId")
                                             .OnDelete(DeleteBehavior.ClientCascade)
                                 );
+            modelBuilder.Entity<ListadoArticuloDatos>(x =>
+            {
+                x.HasNoKey();
+                x.ToView("ListadoArticulos");   // <<--- public DbSet<ListadoArticuloDatos> ListadoArticulos { get; set; }
+            });
         }
 
         public override int SaveChanges()

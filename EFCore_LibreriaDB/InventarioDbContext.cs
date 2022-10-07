@@ -20,6 +20,7 @@ namespace EFCore_LibreriaDB
         public DbSet<ListadoArticuloDatos> ListadoArticulos { get; set; }
         public DbSet<ListadoArticulosNombresDelimBarraDatos> ListadoArticulosCadena { get; set; }
         public DbSet<ArticuloValorTotalDatos> ArticuloValorTotales { get; set; }
+        public DbSet<ArticuloDetalleDatos> ArticulosDetalles { get; set; }
 
 
         public InventarioDbContext()
@@ -93,6 +94,12 @@ namespace EFCore_LibreriaDB
                         new Genero() { Id = 4, FechaCreacion = generoFechaCreacion, EstaActivo = true, EstaEliminado = false, Nombre = "Comedia" },
                         new Genero() { Id = 5, FechaCreacion = generoFechaCreacion, EstaActivo = true, EstaEliminado = false, Nombre = "Drama" }
                     );
+            });
+
+            modelBuilder.Entity<ArticuloDetalleDatos>(x => 
+            {
+                x.HasNoKey();
+                x.ToView("ArticulosDetalles");
             });
         }
 

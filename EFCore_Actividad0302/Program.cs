@@ -23,6 +23,7 @@ namespace EFCore_Actividad0302
             ListadoArticulos();
             ListarArticulosCadenaDelimBarra();
             ArticulosValoresTotales();
+            ArticulosDetalles();
         }
 
         static void Inicializacion()
@@ -37,6 +38,7 @@ namespace EFCore_Actividad0302
             using (var db = new InventarioDbContext(_opcionesBuilder.Options))
             {
                 var articulos = db.Articulos.OrderBy(a => a.Nombre).ToList();
+                Console.WriteLine("=== Articulos ===");
                 articulos.ForEach(a => Console.WriteLine($"Nombre: {a.Nombre}"));
             }
         }
@@ -46,7 +48,8 @@ namespace EFCore_Actividad0302
             using (var db = new InventarioDbContext(_opcionesBuilder.Options))
             {
                 var listado = db.ListadoArticulos.FromSqlRaw("EXECUTE dbo.ListadoArticulos").ToList();
-                foreach(var dato in listado)
+                Console.WriteLine("=== Listado Articulos ===");
+                foreach (var dato in listado)
                 {
                     var salida = $"ARTICULO {dato.Nombre} {dato.Descripcion}";
                     if (!string.IsNullOrWhiteSpace(dato.CategoriaNombre))
@@ -64,6 +67,7 @@ namespace EFCore_Actividad0302
             {
                 var EstaActivoParam = new SqlParameter("EstaActivo", 1);
                 var resultado = db.ListadoArticulosCadena.FromSqlRaw("SELECT dbo.ArticulosNombresCadenaDelimBarra(@EstaActivo) ArticulosCadena", EstaActivoParam).FirstOrDefault();
+                Console.WriteLine("=== Articulos Cadena Delimitada ===");
                 Console.WriteLine($"Articulos Activos: {resultado.ArticulosCadena}");
             }
         }
@@ -74,9 +78,23 @@ namespace EFCore_Actividad0302
             {
                 var EstaActivoParam = new SqlParameter("EstaActivo", 1);
                 var listado = db.ArticuloValorTotales.FromSqlRaw("SELECT * FROM dbo.ArticulosValorTotal(@EstaActivo)", EstaActivoParam).ToList();
+                Console.WriteLine("=== Articulos Valores Totales ===");
                 foreach (var dato in listado)
                 {
                     Console.WriteLine($"Articulo] {dato.Id, -10} |{dato.Nombre, -50} |{dato.Cantidad, -4} |{dato.ValorTotal, -5}");
+                }
+            }
+        }
+
+        public static void ArticulosDetalles()
+        {
+            using (var db = new InventarioDbContext(_opcionesBuilder.Options))
+            {
+                var listado = db.ArticulosDetalles.FromSqlRaw("SELECT * FROM dbo.vwArticulosDetalles ORDER BY ArticuloNombre, GeneroNombre, CategoriaNombre, ParticipanteNombre").ToList();
+                Console.WriteLine("=== Articulos Detalles ===");
+                foreach (var dato in listado)
+                {
+                    Console.WriteLine($"Articulo] {dato.Id,-10} |{dato.ArticuloNombre,-50} |{dato.ArticuloDescripcion,-4} |{dato.ParticipanteNombre,-5} |{dato.CategoriaNombre, -5} |{dato.GeneroNombre, -5}");
                 }
             }
         }

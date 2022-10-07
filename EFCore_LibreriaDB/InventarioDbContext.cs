@@ -82,6 +82,18 @@ namespace EFCore_LibreriaDB
                 x.HasNoKey();
                 x.ToView("ArticuloValorTotales");
             });
+
+            var generoFechaCreacion = new DateTime(2022, 10, 03);
+            modelBuilder.Entity<Genero>(x =>
+            {
+                x.HasData(
+                        new Genero() { Id = 1, FechaCreacion = generoFechaCreacion, EstaActivo = true, EstaEliminado = false, Nombre = "Fantasia" },
+                        new Genero() { Id = 2, FechaCreacion = generoFechaCreacion, EstaActivo = true, EstaEliminado = false, Nombre = "Siencia Ficcion" },
+                        new Genero() { Id = 3, FechaCreacion = generoFechaCreacion, EstaActivo = true, EstaEliminado = false, Nombre = "Horro" },
+                        new Genero() { Id = 4, FechaCreacion = generoFechaCreacion, EstaActivo = true, EstaEliminado = false, Nombre = "Comedia" },
+                        new Genero() { Id = 5, FechaCreacion = generoFechaCreacion, EstaActivo = true, EstaEliminado = false, Nombre = "Drama" }
+                    );
+            });
         }
 
         public override int SaveChanges()

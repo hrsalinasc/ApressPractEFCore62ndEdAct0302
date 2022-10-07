@@ -4,6 +4,7 @@ using EFCore_LibreriaDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore_LibreriaDB.Migrations
 {
     [DbContext(typeof(InventarioDbContext))]
-    partial class InventarioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221007032038_AgregGenerosMigracionCategoriasMigrador")]
+    partial class AgregGenerosMigracionCategoriasMigrador
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace EFCore_LibreriaDB.Migrations
 
                     b.HasIndex("ParticipanteId");
 
-                    b.ToTable("ArticulosParticipantes", (string)null);
+                    b.ToTable("ArticulosParticipantes");
                 });
 
             modelBuilder.Entity("InventarioModelos.Articulo", b =>
@@ -103,7 +105,7 @@ namespace EFCore_LibreriaDB.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("Articulos", (string)null);
+                    b.ToTable("Articulos");
                 });
 
             modelBuilder.Entity("InventarioModelos.ArticuloGenero", b =>
@@ -127,7 +129,7 @@ namespace EFCore_LibreriaDB.Migrations
                     b.HasIndex("ArticuloId", "GeneroId")
                         .IsUnique();
 
-                    b.ToTable("ArticulosGeneros", (string)null);
+                    b.ToTable("ArticulosGeneros");
                 });
 
             modelBuilder.Entity("InventarioModelos.Categoria", b =>
@@ -164,7 +166,7 @@ namespace EFCore_LibreriaDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias", (string)null);
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("InventarioModelos.CategoriaDetalle", b =>
@@ -184,7 +186,7 @@ namespace EFCore_LibreriaDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CategoriaDetalles", (string)null);
+                    b.ToTable("CategoriaDetalles");
                 });
 
             modelBuilder.Entity("InventarioModelos.Genero", b =>
@@ -222,7 +224,7 @@ namespace EFCore_LibreriaDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Generos", (string)null);
+                    b.ToTable("Generos");
 
                     b.HasData(
                         new
@@ -365,7 +367,7 @@ namespace EFCore_LibreriaDB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Participantes", (string)null);
+                    b.ToTable("Participantes");
                 });
 
             modelBuilder.Entity("ArticulosParticipantes", b =>

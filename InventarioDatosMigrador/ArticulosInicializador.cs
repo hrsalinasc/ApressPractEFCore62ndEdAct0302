@@ -160,6 +160,118 @@ namespace InventarioDatosMigrador
                                 EstaEliminado = false,
                             }
                         }
+                    },
+                    new Articulo()
+                    {
+                        Nombre = "Practical Entity Framework",
+                        Descripcion = "El libro que estas leyendo de Entity Framework",
+                        Cantidad = 1,
+                        Notas = "",
+                        EstaEnVenta = false,
+                        FechaCompra = null,
+                        FechaVenta = null,
+                        PrecioCompra = 28.99M,
+                        PrecioFinalOActual = 27.99M,
+                        CreadoPorUsuarioId = _usuarioInicializadorId,
+                        FechaCreacion = fechaCreacion,
+                        EstaActivo = true,
+                        EstaEliminado = false,
+                        Participantes = new List<Participante>
+                        {
+                            new Participante()
+                            {
+                                Nombre = "Brian L. Gorman",
+                                Descripcion = "http://www.linkedin/in/brianlgorman/",
+                                CreadoPorUsuarioId = _usuarioInicializadorId,
+                                FechaCreacion = fechaCreacion,
+                                EstaActivo = true,
+                                EstaEliminado = false,
+                            }
+                        }
+                    },
+                    new Articulo()
+                    {
+                        Nombre = "La Espada del Shannara",
+                        Descripcion = "El libro de fantasia definitivo",
+                        Cantidad = 900,
+                        Notas = "",
+                        EstaEnVenta = false,
+                        FechaCompra = null,
+                        FechaVenta = null,
+                        PrecioCompra = 13.99M,
+                        PrecioFinalOActual = 9.99M,
+                        CreadoPorUsuarioId = _usuarioInicializadorId,
+                        FechaCreacion = fechaCreacion,
+                        EstaActivo = true,
+                        EstaEliminado = false,
+                        Participantes = new List<Participante>
+                        {
+                            new Participante()
+                            {
+                                Nombre = "Terry Brooks",
+                                Descripcion = "http://www.amazon.com/Sword-Shannara-Terry-Brooks/dp/0345314255",
+                                CreadoPorUsuarioId = _usuarioInicializadorId,
+                                FechaCreacion = fechaCreacion,
+                                EstaActivo = true,
+                                EstaEliminado = false,
+                            }
+                        }
+                    },
+                    new Articulo()
+                    {
+                        Nombre = "Mundo de Tanques",
+                        Descripcion = "Disparos en primera persona usando tanques de la 2da Guerra Mundial",
+                        Cantidad = 1,
+                        Notas = "",
+                        EstaEnVenta = false,
+                        FechaCompra = null,
+                        FechaVenta = null,
+                        PrecioCompra = 0.0M,
+                        PrecioFinalOActual = 0.0M,
+                        CreadoPorUsuarioId = _usuarioInicializadorId,
+                        FechaCreacion = fechaCreacion,
+                        EstaActivo = true,
+                        EstaEliminado = false,
+                        Participantes = new List<Participante>
+                        {
+                            new Participante()
+                            {
+                                Nombre = "Wargaming",
+                                Descripcion = "http://worldoftanks.com/",
+                                CreadoPorUsuarioId = _usuarioInicializadorId,
+                                FechaCreacion = fechaCreacion,
+                                EstaActivo = true,
+                                EstaEliminado = false,
+                            }
+                        }
+                    },
+                    new Articulo()
+                    {
+                        Nombre = "Battlefield 2142",
+                        Descripcion = "Siento la necesidad de velocidad",
+                        Cantidad = 1,
+                        Notas = "El juego ya no esta activo",
+                        EstaEnVenta = false,
+                        FechaCompra = null,
+                        FechaVenta = null,
+                        PrecioCompra = 50.0M,
+                        PrecioFinalOActual = 0.0M,
+                        CreadoPorUsuarioId = _usuarioInicializadorId,
+                        FechaCreacion = fechaCreacion,
+                        EstaActivo = true,
+                        EstaEliminado = false,
+                        Participantes = new List<Participante>
+                        {
+                            new Participante()
+                            {
+                                Nombre = "Electronic Arts",
+                                Descripcion = "http://en.wikipedia.org/wiki/Battlefield_2142",
+                                CreadoPorUsuarioId = _usuarioInicializadorId,
+                                FechaCreacion = fechaCreacion,
+                                EstaActivo = true,
+                                EstaEliminado = false,
+                            }
+                        }
                     }
 
                 );

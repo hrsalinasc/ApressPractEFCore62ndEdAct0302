@@ -9,5 +9,7 @@ namespace InventarioModelos.ModelosDato
     public class CategoriaDatos
     {
         public int Id { get; set; }
+        public string Categoria { get; set; }
+        public CategoriaDetalleDatos CategoriaDetalle { get; set; }
     }
 }

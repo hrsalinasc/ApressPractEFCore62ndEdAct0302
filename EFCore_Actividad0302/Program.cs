@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EFCore_LibreriaDB;
 using EFCore_LibreriaDB.Migrations;
 using InventarioModelos;
@@ -27,11 +28,15 @@ namespace EFCore_Actividad0302
         {
             Inicializacion();
             InicializaMapper();
+            
             ListarInventario();
-            ListadoArticulos();
-            ListarArticulosCadenaDelimBarra();
-            ArticulosValoresTotales();
-            ArticulosDetalles();
+            ListarInventarioConProyeccion();
+            ListarCategoriasYColores();
+            //ListadoArticulos();
+            //ListadoArticulosConLinq();
+            //ListarArticulosCadenaDelimBarra();
+            //ArticulosValoresTotales();
+            //ArticulosDetalles();
         }
 
         static void Inicializacion()
@@ -61,10 +66,40 @@ namespace EFCore_Actividad0302
             {
                 var articulos = db.Articulos.OrderBy(a => a.Nombre).ToList();
                 var listado = _mapper.Map<List<Articulo>, List<ArticuloDatos>>(articulos);
-                Console.WriteLine("=== Articulos ===");
+                Console.WriteLine("=== Listar Inventarios ===");
                 listado.ForEach(a => Console.WriteLine($"Nombre: {a.Nombre}"));
             }
         }
+
+        private static void ListarInventarioConProyeccion()
+        {
+            using (var db = new InventarioDbContext(_opcionesBuilder.Options))
+            {
+                var articulos = db.Articulos
+                                    .OrderBy(a => a.Nombre)
+                                    .ProjectTo<ArticuloDatos>(_mapper.ConfigurationProvider)
+                                    .ToList();
+                Console.WriteLine("=== Listar Inventarios con Proyeccion ===");
+                articulos.ForEach(a => Console.WriteLine($"Articulo: {a}"));
+            }
+        }
+
+        private static void ListarCategoriasYColores()
+        {
+            using (var db = new InventarioDbContext(_opcionesBuilder.Options))
+            {
+                var resultado = db.Categorias
+                                    .Include(x => x.CategoriaDetalle)
+                                    .ProjectTo<CategoriaDatos>(_mapper.ConfigurationProvider)
+                                    .ToList();
+                Console.WriteLine("=== Listar Inventarios Categorias Y Colores ===");
+                foreach(var c in resultado)
+                {
+                    Console.WriteLine($"Categoria [{c.Categoria}] es {c.CategoriaDetalle.Color}");
+                }
+            }
+        }
+
 
         private static void ListadoArticulos()
         {
@@ -80,6 +115,37 @@ namespace EFCore_Actividad0302
                         salida = $"{salida}, Categoria: {dato.CategoriaNombre}";
                     }
                     Console.WriteLine(salida);
+                }
+            }
+        }
+
+        public static void ListadoArticulosConLinq()
+        {
+            var fechaMin = new DateTime(2021, 1, 1);
+            var fechaMax = new DateTime(2024, 1, 1);
+            using (var db = new InventarioDbContext(_opcionesBuilder.Options))
+            {
+                var listado = db.Articulos.Select(x => new ArticuloDatos
+                {
+                    FechaCreacion = x.FechaCreacion,
+                    CategoriaNombre = x.Categoria.Nombre,
+                    Descripcion = x.Descripcion,
+                    EstaActivo = x.EstaActivo,
+                    EstaEliminado = x.EstaEliminado,
+                    Nombre = x.Nombre,
+                    Notas = x.Notas,
+                    CategoriaId = x.Categoria.Id,
+                    Id = x.Id
+                })
+                .Where(x => x.FechaCreacion >= fechaMin && x.FechaCreacion <= fechaMax)
+                .OrderBy(y => y.CategoriaNombre)
+                .ThenBy(z => z.Nombre)
+                .ToList();
+
+                Console.WriteLine("=== Articulos Detalles con LinQ===");
+                foreach (var articuloDato in listado)
+                {
+                    Console.WriteLine(articuloDato);
                 }
             }
         }
@@ -121,5 +187,7 @@ namespace EFCore_Actividad0302
                 }
             }
         }
+
+
     }
 }
